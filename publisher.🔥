@@ -1,0 +1,27 @@
+from time import sleep
+from python import Python
+
+fn main() raises:
+    
+    let rclmj = Python.import_module("rclpy")
+    let msgmj = Python.import_module("std_msgs.msg")
+    
+    _ = rclmj.init()    
+    let node = rclmj.create_node('node_mojo')    
+    let publisher = node.create_publisher(msgmj.String, 'mytopic', 10)    
+    let msg = msgmj.String()        
+    var i = 0    
+    while rclmj.ok():                 
+        let converted_num = String(i)                    
+        msg.data = 'Hello World 🔥: '+ converted_num
+        i += 1          
+        print(msg.data)
+        _ = publisher.publish(msg)        
+        sleep(0.5)  # seconds
+
+    _ = node.destroy_node()
+    _ = rclmj.shutdown()
+
+
+
+
